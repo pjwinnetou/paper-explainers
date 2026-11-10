@@ -38,61 +38,23 @@ article h2 { font-family: var(--f-display); font-weight: 400; font-size: clamp(1
 .meta a { color: var(--blue); text-underline-offset: 3px; }
 .meta a:focus-visible { outline: 2px solid var(--yellow); outline-offset: 2px; }
 footer { color: var(--chalk-dim); font-size: .85rem; border-top: 1px solid var(--line); padding-top: 16px; }
+.back { color: var(--blue); text-underline-offset: 3px; font-size: .95rem; }
+.list { display: grid; gap: 18px; margin: 0; padding: 0; list-style: none; }
+.list a { font-family: var(--f-display); font-size: clamp(1.5rem, 4vw, 2rem); color: var(--chalk); text-decoration-color: var(--yellow); text-underline-offset: 6px; line-height: 1.2; }
+.list span { display: block; color: var(--chalk-dim); font-size: .95rem; font-family: var(--f-body); }
 </style>
 </head>
 <body>
-
 <div class="wrap">
   <header>
     <h1>Paper Explainers</h1>
-    <p>Short narrated chalkboard walkthroughs of physics papers: what was measured, which observables, and what came out. Each comes in a full version and 40- and 20-second cuts.</p>
+    <p>Short narrated chalkboard walkthroughs of physics papers. Each paper has its own page with a full version and 40- and 20-second cuts.</p>
   </header>
-
-  <article data-videos='{"full":"videos/OO_full.mp4","40":"videos/OO_40s.mp4","20":"videos/OO_20s.mp4"}'>
-    <h2>Selection bias on high-p<sub>T</sub> yields and correlations in O+O collisions</h2>
-    <div class="lengths" role="group" aria-label="Video length">
-      <button type="button" data-len="full" aria-pressed="true">Full · 5:05</button>
-      <button type="button" data-len="40" aria-pressed="false">0:36</button>
-      <button type="button" data-len="20" aria-pressed="false">0:19</button>
-    </div>
-    <div class="player"><video controls preload="metadata" playsinline src="videos/OO_full.mp4"></video></div>
-    <div class="meta">
-      <span>Park, Nagle, Perepelitsa, Lim, Loizides</span>
-      <span>Phys. Rev. C 112, 064916 (2025)</span>
-      <a href="https://arxiv.org/abs/2507.03603" target="_blank" rel="noopener">arXiv:2507.03603</a>
-    </div>
-  </article>
-
-  <article data-videos='{"full":"videos/sPHENIX_full.mp4","40":"videos/sPHENIX_40s.mp4","20":"videos/sPHENIX_20s.mp4"}'>
-    <h2>Dijet momentum imbalance and acoplanarity in p+p at √s = 200 GeV</h2>
-    <div class="lengths" role="group" aria-label="Video length">
-      <button type="button" data-len="full" aria-pressed="true">Full · 4:29</button>
-      <button type="button" data-len="40" aria-pressed="false">0:36</button>
-      <button type="button" data-len="20" aria-pressed="false">0:19</button>
-    </div>
-    <div class="player"><video controls preload="metadata" playsinline src="videos/sPHENIX_full.mp4"></video></div>
-    <div class="meta">
-      <span>sPHENIX Collaboration</span>
-      <a href="https://arxiv.org/abs/2606.17184" target="_blank" rel="noopener">arXiv:2606.17184</a>
-    </div>
-  </article>
-
+  <ul class="list">
+    <li><a href="oo-selection-bias/">Selection bias on high-p<sub>T</sub> yields and correlations in O+O collisions</a><span>Park, Nagle, Perepelitsa, Lim, Loizides · Phys. Rev. C 112, 064916 (2025)</span></li>
+    <li><a href="sphenix-dijet/">Dijet momentum imbalance and acoplanarity in p+p at √s = 200 GeV</a><span>sPHENIX Collaboration · arXiv:2606.17184</span></li>
+  </ul>
   <footer>Narration is a synthetic voice (Kokoro). Figures are from the papers' arXiv sources.</footer>
 </div>
-
-<script>
-document.querySelectorAll("article[data-videos]").forEach(function (art) {
-  var srcs = JSON.parse(art.dataset.videos);
-  var video = art.querySelector("video");
-  art.querySelectorAll(".lengths button").forEach(function (btn) {
-    btn.addEventListener("click", function () {
-      art.querySelectorAll(".lengths button").forEach(function (b) { b.setAttribute("aria-pressed", b === btn ? "true" : "false"); });
-      video.src = srcs[btn.dataset.len];
-      video.load();
-    });
-  });
-});
-</script>
-
 </body>
 </html>
