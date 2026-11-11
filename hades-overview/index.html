@@ -1,0 +1,76 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>HADES Overview</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Caveat+Brush&family=Atkinson+Hyperlegible:wght@400;700&display=swap">
+<style>body{margin:0}img,video{max-width:100%}</style>
+<style>
+/* Layout: one chalkboard column, each paper a framed video with a length switch and its citation. Single dark look on purpose. */
+:root {
+  --board: #1E2A24; --board-2: #26352d; --chalk: #ECEBE4; --chalk-dim: #a9b3ab;
+  --yellow: #F2D16B; --blue: #8CC7F0; --line: #3a4a41;
+  --f-display: "Caveat Brush", "Chalkboard SE", cursive;
+  --f-body: "Atkinson Hyperlegible", system-ui, sans-serif;
+  color-scheme: dark;
+}
+body { background: var(--board); color: var(--chalk); font-family: var(--f-body); font-size: 16px; line-height: 1.55; }
+.wrap { max-width: 960px; margin: 0 auto; padding-block: 40px 64px;
+  padding-left: max(16px, env(safe-area-inset-left, 0px)); padding-right: max(16px, env(safe-area-inset-right, 0px));
+  display: grid; gap: 56px; }
+header h1 { font-family: var(--f-display); font-weight: 400; color: var(--yellow); font-size: clamp(2.4rem, 6vw, 3.4rem);
+  margin: 0; line-height: 1; text-wrap: balance; }
+header h1::after { content: ""; display: block; height: 3px; width: 5.5ch; background: var(--yellow); margin-top: 10px; border-radius: 2px; opacity: .8; }
+header p { color: var(--chalk-dim); margin: 14px 0 0; max-width: 60ch; }
+article { display: grid; gap: 14px; min-width: 0; }
+article h2 { font-family: var(--f-display); font-weight: 400; font-size: clamp(1.6rem, 4vw, 2.1rem); margin: 0; line-height: 1.15; text-wrap: balance; }
+.lengths { display: flex; flex-wrap: wrap; gap: 8px; }
+.lengths button { font: inherit; font-size: .95rem; color: var(--chalk); background: transparent; border: 1.5px solid var(--line);
+  border-radius: 999px; padding: 4px 14px; cursor: pointer; font-variant-numeric: tabular-nums; }
+.lengths button:hover { border-color: var(--chalk-dim); }
+.lengths button[aria-pressed="true"] { border-color: var(--yellow); color: var(--yellow); }
+.lengths button:focus-visible { outline: 2px solid var(--yellow); outline-offset: 2px; }
+.player { aspect-ratio: 16 / 9; max-width: 100%; background: #000; border: 2px solid var(--line); border-radius: 6px; overflow: hidden; }
+.player video { width: 100%; height: 100%; display: block; }
+.meta { display: flex; flex-wrap: wrap; gap: 6px 18px; color: var(--chalk-dim); font-size: .95rem; }
+.meta a { color: var(--blue); text-underline-offset: 3px; }
+.meta a:focus-visible { outline: 2px solid var(--yellow); outline-offset: 2px; }
+footer { color: var(--chalk-dim); font-size: .85rem; border-top: 1px solid var(--line); padding-top: 16px; }
+.back { color: var(--blue); text-underline-offset: 3px; font-size: .95rem; }
+.list { display: grid; gap: 18px; margin: 0; padding: 0; list-style: none; }
+.list a { font-family: var(--f-display); font-size: clamp(1.5rem, 4vw, 2rem); color: var(--chalk); text-decoration-color: var(--yellow); text-underline-offset: 6px; line-height: 1.2; }
+.list span { display: block; color: var(--chalk-dim); font-size: .95rem; font-family: var(--f-body); }
+</style>
+</head>
+<body>
+<div class="wrap">
+  <a class="back" href="../">← All paper explainers</a>
+  <article>
+    <h1 style="font-family:var(--f-display);font-weight:400;font-size:clamp(2rem,5vw,2.8rem);margin:0;line-height:1.1;color:var(--yellow);text-wrap:balance">HADES Overview: di-electrons from baryon-rich matter</h1>
+    <div class="player"><video controls preload="metadata" playsinline src="../videos/HADES_full.mp4"></video></div>
+    <div class="meta">
+      <span>Sukyung Kim (BUW), for the HADES Collaboration</span>
+      <span>Hard Probes 2026 · slides 5-17 · 3:58</span>
+      <a href="https://indico.cern.ch/event/1428985/contributions/7088847/" target="_blank" rel="noopener">Indico</a>
+    </div>
+  </article>
+  <footer>Narration is a synthetic voice (Kokoro). Slides are from the talk on Indico.</footer>
+</div>
+
+<script>
+document.querySelectorAll("article[data-videos]").forEach(function (art) {
+  var srcs = JSON.parse(art.dataset.videos);
+  var video = art.querySelector("video");
+  art.querySelectorAll(".lengths button").forEach(function (btn) {
+    btn.addEventListener("click", function () {
+      art.querySelectorAll(".lengths button").forEach(function (b) { b.setAttribute("aria-pressed", b === btn ? "true" : "false"); });
+      video.src = srcs[btn.dataset.len];
+      video.load();
+    });
+  });
+});
+</script>
+</body>
+</html>
